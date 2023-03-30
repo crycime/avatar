@@ -22,14 +22,15 @@ jobs:
 
       - name: Check for changes in package
         id: check_changes
-          run: |
-            PACKAGE_CHANGES=$(git diff --name-only HEAD^ HEAD -- ${{ matrix.package }} | wc -l)
-            echo "Package changes: $PACKAGE_CHANGES"
-            if [ $PACKAGE_CHANGES -gt 0 ]; then
-              echo "::set-output name=publish::true"
-            else
-              echo "::set-output name=publish::false"
-            fi
+        run: |
+          git fetch origin
+          PACKAGE_CHANGES=$(git diff --name-only origin/main..HEAD -- ${{ matrix.package }} | wc -l)
+          echo "Package changes: $PACKAGE_CHANGES"
+          if [ $PACKAGE_CHANGES -gt 0 ]; then
+            echo "::set-output name=publish::true"
+          else
+            echo "::set-output name=publish::false"
+          fi
 
       - name: Publish package
         if: steps.check_changes.outputs.publish == 'true'
