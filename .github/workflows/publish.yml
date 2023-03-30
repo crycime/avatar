@@ -1,0 +1,37 @@
+name: Publish NPM packages
+
+on:
+  push:
+    branches:
+      - master  # 或者是您想要触发此操作的分支名称，例如 'master'
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        package: ['package1', 'package2']  # 根据实际情况更新包名列表
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 14
+
+      - name: Check for changes in package
+        id: check_changes
+        run: |
+          PACKAGE_CHANGES=$(git diff --name-only HEAD^ HEAD -- ${{ matrix.package }} | wc -l)
+          if [ $PACKAGE_CHANGES -gt 0 ]; then
+            echo "::set-output name=publish::true"
+          else
+            echo "::set-output name=publish::false"
+          fi
+
+      - name: Publish package
+        if: steps.check_changes.outputs.publish == 'true'
+        run: cd ${{ matrix.package }} && npm ci && npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
