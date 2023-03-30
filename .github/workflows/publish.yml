@@ -3,7 +3,7 @@ name: Publish NPM packages
 on:
   push:
     branches:
-      - master  # 或者是您想要触发此操作的分支名称，例如 'master'
+      - main  # 或者是您想要触发此操作的分支名称，例如 'master'
 
 jobs:
   publish:
