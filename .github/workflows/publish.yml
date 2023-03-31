@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - test
 
 jobs:
   publish:
@@ -48,6 +49,10 @@ jobs:
         run: |
           cd ${{ matrix.package }}
           yarn install
-          yarn publish --access public
+          if [ "${{ github.ref }}" == "refs/heads/main" ]; then
+            yarn publish --access public
+          elif [ "${{ github.ref }}" == "refs/heads/test" ]; then
+            yarn publish --access public --tag test
+          fi
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
