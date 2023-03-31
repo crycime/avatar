@@ -37,6 +37,6 @@ jobs:
 
       - name: Publish package
         if: env.publish == 'true'
-        run: cd ${{ matrix.package }} && npm ci && npm publish
+        run: cd ${{ matrix.package }} && npm ci && npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
