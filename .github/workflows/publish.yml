@@ -24,17 +24,19 @@ jobs:
         id: check_changes
         run: |
           git fetch origin
+          echo "Before: ${{ github.event.before }}"
+          echo "After: ${{ github.event.after }}"
           COMMIT_RANGE="${{ github.event.before }}..${{ github.event.after }}"
           PACKAGE_CHANGES=$(git diff-tree --no-commit-id --name-only -r $COMMIT_RANGE -- ${{ matrix.package }} | wc -l)
           echo "Package changes: $PACKAGE_CHANGES"
           if [ $PACKAGE_CHANGES -gt 0 ]; then
-            echo "::set-output name=publish::true"
+            echo "publish=true" >> $GITHUB_ENV
           else
-            echo "::set-output name=publish::false"
+            echo "publish=false" >> $GITHUB_ENV
           fi
 
       - name: Publish package
-        if: steps.check_changes.outputs.publish == 'true'
+        if: env.publish == 'true'
         run: cd ${{ matrix.package }} && npm ci && npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
