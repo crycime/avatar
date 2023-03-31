@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        package: ['package1', 'package2']
+        package: ['relayer']
     steps:
       - name: Check out repository
         uses: actions/checkout@v2
