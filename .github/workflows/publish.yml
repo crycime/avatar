@@ -24,7 +24,7 @@ jobs:
         id: check_changes
         run: |
           git fetch origin
-          PACKAGE_CHANGES=$(git diff --name-only origin/main..HEAD -- ${{ matrix.package }} | wc -l)
+          PACKAGE_CHANGES=$(git diff --name-only HEAD^ HEAD -- ${{ matrix.package }} | wc -l)
           echo "Package changes: $PACKAGE_CHANGES"
           if [ $PACKAGE_CHANGES -gt 0 ]; then
             echo "::set-output name=publish::true"
