@@ -46,6 +46,7 @@ jobs:
         run: |
           cd ${{ matrix.package }}
           yarn install
+          yarn build
           if [ "${{ github.ref }}" == "refs/heads/main" ]; then
             yarn publish --access public
           elif [ "${{ github.ref }}" == "refs/heads/test" ]; then

@@ -1,0 +1,22 @@
+{
+    "compilerOptions": {
+        "moduleResolution": "node",
+        "module": "commonjs",
+        "declaration": true,
+        "removeComments": true,
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "target": "es2017",
+        "types": ["reflect-metadata", "node", "jest"],
+        "sourceMap": true,
+        "outDir": "./lib",
+        "baseUrl": "./src",
+        "incremental": true,
+        "allowSyntheticDefaultImports": true
+    },
+    "compileOnSave": true,
+    "include": ["src",
+      "src/typechain"
+    ],
+    "exclude": ["node_modules", "sample"]
+}
