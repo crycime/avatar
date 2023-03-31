@@ -41,9 +41,6 @@ jobs:
           echo "@cyrcime123:registry=https://registry.npmjs.org/" > ${{ matrix.package }}/.npmrc
           echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" >> ${{ matrix.package }}/.npmrc
 
-#      - name: Install Yarn
-#        run: npm install -g yarn
-
       - name: Publish package
         if: env.publish == 'true'
         run: |
@@ -52,7 +49,7 @@ jobs:
           if [ "${{ github.ref }}" == "refs/heads/main" ]; then
             yarn publish --access public
           elif [ "${{ github.ref }}" == "refs/heads/test" ]; then
-            yarn publish --access public --tag test
+            yarn publish --access public --tag beta
           fi
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
