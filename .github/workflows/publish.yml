@@ -35,6 +35,11 @@ jobs:
             echo "publish=false" >> $GITHUB_ENV
           fi
 
+      - name: Create .npmrc file
+        run: |
+          echo "@cyrcime123:registry=https://registry.npmjs.org/" > .npmrc
+          echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" >> .npmrc
+
       - name: Publish package
         if: env.publish == 'true'
         run: cd ${{ matrix.package }} && npm ci && npm publish --access public
