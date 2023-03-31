@@ -37,8 +37,8 @@ jobs:
 
       - name: Create .npmrc file
         run: |
-          echo "@cyrcime123:registry=https://registry.npmjs.org/" > .npmrc
-          echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" >> .npmrc
+          echo "@cyrcime123:registry=https://registry.npmjs.org/" > ${{ matrix.package }}/.npmrc
+          echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" >> ${{ matrix.package }}/.npmrc
 
       - name: Publish package
         if: env.publish == 'true'
