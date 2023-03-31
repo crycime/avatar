@@ -26,8 +26,7 @@ jobs:
           git fetch origin
           echo "Before: ${{ github.event.before }}"
           echo "After: ${{ github.event.after }}"
-          COMMIT_RANGE="${{ github.event.before }}..${{ github.event.after }}"
-          PACKAGE_CHANGES=$(git diff-tree --no-commit-id --name-only -r $COMMIT_RANGE -- ${{ matrix.package }} | wc -l)
+          PACKAGE_CHANGES=$(git diff --name-only ${{ github.event.before }} ${{ github.event.after }} -- ${{ matrix.package }} | wc -l)
           echo "Package changes: $PACKAGE_CHANGES"
           if [ $PACKAGE_CHANGES -gt 0 ]; then
             echo "publish=true" >> $GITHUB_ENV
