@@ -3,14 +3,14 @@ name: Publish NPM packages
 on:
   push:
     branches:
-      - main  # 或者是您想要触发此操作的分支名称，例如 'master'
+      - main
 
 jobs:
   publish:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        package: ['package1', 'package2']  # 根据实际情况更新包名列表
+        package: ['package1', 'package2']
     steps:
       - name: Check out repository
         uses: actions/checkout@v2
